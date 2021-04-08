@@ -4,11 +4,18 @@ import com.example.duckduckgoapp.BuildConfig.FLAVOR
 
 internal object FlavorConfigProvider {
 
-    private const val theWire = "the+wire"
-    private const val simpsons = "simpsons"
+    private const val simpsons_FLAVOR = "simpsons"
+    private const val thewire_FLAVOR = "thewire"
 
-    // It would be better having the endpoint for each flavor in their corresponding project level resource folders, this is just to simplify things
-    fun getDuckDuckEndPoint() =
-        "http://api.duckduckgo.com/?q=${if (FLAVOR == "simpsons") simpsons else theWire
-        }+characters&amp;format=json"
+    private const val theWireQueryParam = "the+wire+characters"
+    private const val simpsonsQueryParam = "simpsons+characters"
+
+    // Another approach is by having the values in a res xml file for each independent flavor
+    fun getCharacterServiceQParameter(): String {
+        return when(FLAVOR) {
+            simpsons_FLAVOR -> simpsonsQueryParam
+            thewire_FLAVOR -> theWireQueryParam
+            else -> simpsons_FLAVOR // Simpson as default if there is a third flavor not listed
+        }
+    }
 }
