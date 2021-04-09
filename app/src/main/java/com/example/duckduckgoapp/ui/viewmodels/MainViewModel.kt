@@ -1,6 +1,5 @@
 package com.example.duckduckgoapp.ui.viewmodels
 
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -31,7 +30,6 @@ class MainViewModel @ViewModelInject constructor(
                     mutableMainState.value = MainState.ERROR(it)
                 }
             }.collect {
-                Log.d("JOSE", it!!.toString())
                 mutableMainState.value = MainState.SUCCESS(it.toCharacterList())
             }
         }

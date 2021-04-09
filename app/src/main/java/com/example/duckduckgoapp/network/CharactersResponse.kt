@@ -2,6 +2,7 @@ package com.example.duckduckgoapp.network
 
 import com.example.duckduckgoapp.entities.Character
 import com.example.duckduckgoapp.utils.NetworkEndPointProvider
+import com.google.gson.annotations.SerializedName
 
 data class CharactersResponse(
     val abstract: String?,
@@ -21,6 +22,7 @@ data class CharactersResponse(
     val imageWidth: Long?,
     val infobox: String?,
     val redirect: String?,
+    @SerializedName("RelatedTopics")
     val relatedTopics: List<RelatedTopic>?,
     val results: List<Any?>?,
     val type: String?,
@@ -86,13 +88,17 @@ data class CharactersResponse(
     }
 
     data class RelatedTopic(
+        @SerializedName("FirstURL")
         val firstURL: String?, // Name is here
+        @SerializedName("Icon")
         val icon: Icon?,
         val result: String?,
+        @SerializedName("Text")
         val text: String? // Description is here
     ) {
         data class Icon(
             val height: String?,
+            @SerializedName("URL")
             val url: String?, // Image is here
             val width: String?
         )
