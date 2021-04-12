@@ -6,14 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.MainActivity">
 
+    <FrameLayout
+        android:id="@+id/character_list_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/error_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- The following is just for educational purposes, not meant to be in a production app -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:layout_margin="10dp"
+        android:background="@color/black"
+        android:text="sw600dp"
+        android:textColor="@color/white"
+        android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.479" />
+        app:layout_constraintRight_toRightOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

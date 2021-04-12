@@ -110,8 +110,12 @@ fun CharactersResponse.toCharacterList(): List<Character> {
 
         val characterName =
             characterDetails.firstURL
-                ?.removePrefix("${NetworkEndPointProvider.duckDuckGoBaseURL}/")
+                ?.removePrefix("https://duckduckgo.com/")
                 ?.replace("_", " ")
+                // TODO: The following 3 substrings may be caused by a bad parsing from GSON/Retrofit
+                ?.replace("%22", "")
+                ?.replace("%2C", "")
+                ?.replace("%26", "")
         val characterImageUrl =
             "${NetworkEndPointProvider.duckDuckGoBaseURL}${characterDetails.icon?.url}"
 

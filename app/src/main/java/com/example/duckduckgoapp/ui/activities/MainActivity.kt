@@ -1,15 +1,15 @@
 package com.example.duckduckgoapp.ui.activities
 
 import android.os.Bundle
-import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.duckduckgoapp.R
 import com.example.duckduckgoapp.databinding.ActivityMainBinding
+import com.example.duckduckgoapp.ext.deviceModeIsLandscape
+import com.example.duckduckgoapp.ui.fragments.CharacterDetailsFragment
 import com.example.duckduckgoapp.ui.fragments.CharacterListFragment
 import com.example.duckduckgoapp.ui.viewmodels.MainViewModel
-import com.example.duckduckgoapp.ui.viewmodels.MainViewModel.MainState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel by viewModels<MainViewModel>()
+    private var isPortraitDetailsDisplaying = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,39 +28,62 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setViews()
 
-        setMainStateCollector()
+        setStateFlows()
+
+        if (deviceModeIsLandscape()) {
+            displayCharacterListFragment()
+            displayCharacterDetailsFragment()
+        } else {
+            displayCharacterListFragment()
+        }
+
         mainViewModel.fetchCharacters()
     }
 
-    private fun setViews() {
+    override fun onBackPressed() {
+        if (!deviceModeIsLandscape() && isPortraitDetailsDisplaying) {
+            displayCharacterListFragment()
+            isPortraitDetailsDisplaying = false
+        } else {
+            this.finish()
+        }
+    }
+
+    private fun setStateFlows() {
+        lifecycleScope.launchWhenCreated {
+            mainViewModel.selectedCharacterState.collect { state ->
+                when (state) {
+                    is MainViewModel.SelectedCharacterState.SELECTED -> {
+                        if (!deviceModeIsLandscape()) {
+                            replaceCharacterFragment()
+                        }
+                    }
+                    is MainViewModel.SelectedCharacterState.UNSELECTED -> { }
+                }
+            }
+        }
+    }
+
+    private fun displayCharacterListFragment() {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragment_container, CharacterListFragment())
+        transaction.replace(R.id.character_list_fragment_container, CharacterListFragment())
         transaction.addToBackStack(null)
         transaction.commit()
     }
 
-    //TODO: https://www.youtube.com/watch?v=KJGKj078Qag
+    private fun displayCharacterDetailsFragment() {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.character_details_fragment_container, CharacterDetailsFragment())
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
 
-    private fun setMainStateCollector() {
-        lifecycleScope.launchWhenStarted {
-            mainViewModel.mainState.collect { state ->
-                when(state) {
-                    is MainState.SUCCESS -> {
-
-                    }
-                    is MainState.ERROR -> {
-
-                    }
-                    is MainState.LOADING -> {
-
-                    }
-                    else -> {
-                        // BLANK or any other unhandled state
-                    }
-                }
-            }
-        }
+    private fun replaceCharacterFragment() {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.character_list_fragment_container, CharacterDetailsFragment())
+        transaction.addToBackStack(null)
+        transaction.commit()
+        isPortraitDetailsDisplaying = true
     }
 }

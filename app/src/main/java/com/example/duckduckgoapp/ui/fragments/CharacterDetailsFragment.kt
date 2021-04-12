@@ -5,56 +5,57 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.example.duckduckgoapp.R
+import com.example.duckduckgoapp.databinding.FragmentCharacterDetailsBinding
+import com.example.duckduckgoapp.ui.viewmodels.MainViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CharacterDetailsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@ExperimentalCoroutinesApi
 class CharacterDetailsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentCharacterDetailsBinding
+    private val activityViewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_character_details, container, false)
+        binding = FragmentCharacterDetailsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CharacterDetailsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CharacterDetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setStateFlows()
+    }
+
+    private fun setStateFlows() {
+        lifecycleScope.launchWhenStarted {
+            activityViewModel.selectedCharacterState.collect { state ->
+                when (state) {
+                    is MainViewModel.SelectedCharacterState.SELECTED -> {
+                        with(binding) {
+                            characterNameTextView.text = state.character.name
+                            characterDescriptionTextView.text = state.character.description
+                            duckDuckGoLinkTextView.text = state.character.duckDuckLink
+                            duckDuckGoLinkTextView.tag = state.character.duckDuckLink
+                            Glide.with(this.root).load(state.character.imageURL)
+                                .placeholder(R.drawable.ic_baseline_cloud_download_24)
+                                .error(R.drawable.ic_baseline_image_not_supported_24)
+                                .into(characterImageTextView)
+                            fragmentCharacterDetailsLayout.isVisible = true
+                        }
+                    }
+                    is MainViewModel.SelectedCharacterState.UNSELECTED -> {
+
+                    }
                 }
             }
+        }
     }
 }
