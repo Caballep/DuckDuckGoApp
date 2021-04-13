@@ -1,8 +1,8 @@
-package com.example.duckduckgoapp.repositories
+package com.example.duckduckgoapp.local.repositories
 
-import com.example.duckduckgoapp.network.CharactersResponse
-import com.example.duckduckgoapp.network.DuckDuckService
-import com.example.duckduckgoapp.utils.FlavorConfigProvider
+import com.example.duckduckgoapp.remote.entities.CharactersResponse
+import com.example.duckduckgoapp.remote.services.DuckDuckService
+import com.example.duckduckgoapp.local.utils.FlavorConfigHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -16,7 +16,7 @@ class DuckDuckServiceRepository @Inject constructor(
         return flow {
             emit(
                 duckDuckService.getCharacters(
-                    q = FlavorConfigProvider.getCharacterServiceQParameter()
+                    q = FlavorConfigHelper.getCharacterServiceQParameter()
                 )
             )
         }.flowOn(Dispatchers.IO)

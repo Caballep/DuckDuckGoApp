@@ -1,8 +1,8 @@
-package com.example.duckduckgoapp.utils
+package com.example.duckduckgoapp.local.utils
 
 import com.example.duckduckgoapp.BuildConfig.FLAVOR
 
-internal object FlavorConfigProvider {
+internal object FlavorConfigHelper {
 
     private const val simpsons_FLAVOR = "simpsons"
     private const val thewire_FLAVOR = "thewire"

@@ -1,4 +1,4 @@
-package com.example.duckduckgoapp.ui.fragments
+package com.example.duckduckgoapp.local.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.duckduckgoapp.R
 import com.example.duckduckgoapp.databinding.FragmentCharacterDetailsBinding
-import com.example.duckduckgoapp.ui.viewmodels.MainViewModel
+import com.example.duckduckgoapp.local.ui.viewmodels.MainViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 

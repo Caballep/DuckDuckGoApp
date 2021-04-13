@@ -1,7 +1,7 @@
 package com.example.duckduckgoapp.di
 
-import com.example.duckduckgoapp.network.DuckDuckService
-import com.example.duckduckgoapp.utils.NetworkEndPointProvider
+import com.example.duckduckgoapp.remote.services.DuckDuckService
+import com.example.duckduckgoapp.remote.utils.NetworkEndPointHelper
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -39,7 +39,7 @@ class NetworkModule {
             .create()
         return Retrofit.Builder()
             .client(providesOkHttpClient())
-            .baseUrl(NetworkEndPointProvider.duckDuckGoBaseURL)
+            .baseUrl(NetworkEndPointHelper.duckDuckGoBaseURL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }

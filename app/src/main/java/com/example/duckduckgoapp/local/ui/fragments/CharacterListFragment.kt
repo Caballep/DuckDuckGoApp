@@ -1,4 +1,4 @@
-package com.example.duckduckgoapp.ui.fragments
+package com.example.duckduckgoapp.local.ui.fragments
 
 import android.os.Bundle
 import android.text.Editable
@@ -11,10 +11,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.duckduckgoapp.databinding.FragmentCharacterListBinding
-import com.example.duckduckgoapp.entities.Character
-import com.example.duckduckgoapp.ui.adapters.CharacterListAdapter
-import com.example.duckduckgoapp.ui.adapters.CharacterListListener
-import com.example.duckduckgoapp.ui.viewmodels.MainViewModel
+import com.example.duckduckgoapp.local.models.Character
+import com.example.duckduckgoapp.local.ui.adapters.CharacterListAdapter
+import com.example.duckduckgoapp.local.ui.adapters.CharacterListListener
+import com.example.duckduckgoapp.local.ui.viewmodels.MainViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 

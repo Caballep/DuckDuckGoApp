@@ -1,4 +1,4 @@
-package com.example.duckduckgoapp.entities
+package com.example.duckduckgoapp.local.models
 
 data class Character(
     val name: String,

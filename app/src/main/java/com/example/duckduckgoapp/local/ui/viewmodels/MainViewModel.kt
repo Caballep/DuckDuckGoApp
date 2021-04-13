@@ -1,11 +1,10 @@
-package com.example.duckduckgoapp.ui.viewmodels
+package com.example.duckduckgoapp.local.ui.viewmodels
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.duckduckgoapp.entities.Character
-import com.example.duckduckgoapp.network.toCharacterList
-import com.example.duckduckgoapp.repositories.DuckDuckServiceRepository
+import com.example.duckduckgoapp.local.models.Character
+import com.example.duckduckgoapp.local.repositories.DuckDuckServiceRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

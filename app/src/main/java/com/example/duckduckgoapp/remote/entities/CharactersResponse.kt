@@ -1,7 +1,7 @@
-package com.example.duckduckgoapp.network
+package com.example.duckduckgoapp.remote.entities
 
-import com.example.duckduckgoapp.entities.Character
-import com.example.duckduckgoapp.utils.NetworkEndPointProvider
+import com.example.duckduckgoapp.local.models.Character
+import com.example.duckduckgoapp.remote.utils.NetworkEndPointHelper
 import com.google.gson.annotations.SerializedName
 
 data class CharactersResponse(
@@ -103,27 +103,27 @@ data class CharactersResponse(
             val width: String?
         )
     }
-}
 
-fun CharactersResponse.toCharacterList(): List<Character> {
-    return relatedTopics?.map { characterDetails ->
+    fun toCharacterList(): List<Character> {
+        return relatedTopics?.map { characterDetails ->
 
-        val characterName =
-            characterDetails.firstURL
-                ?.removePrefix("https://duckduckgo.com/")
-                ?.replace("_", " ")
-                // TODO: The following 3 substrings may be caused by a bad parsing from GSON/Retrofit
-                ?.replace("%22", "")
-                ?.replace("%2C", "")
-                ?.replace("%26", "")
-        val characterImageUrl =
-            "${NetworkEndPointProvider.duckDuckGoBaseURL}${characterDetails.icon?.url}"
+            val characterName =
+                characterDetails.firstURL
+                    ?.removePrefix("https://duckduckgo.com/")
+                    ?.replace("_", " ")
+                    // TODO: The following 3 substrings may be caused by a bad parsing from GSON/Retrofit
+                    ?.replace("%22", "")
+                    ?.replace("%2C", "")
+                    ?.replace("%26", "")
+            val characterImageUrl =
+                "${NetworkEndPointHelper.duckDuckGoBaseURL}${characterDetails.icon?.url}"
 
-        Character(
-            name = characterName ?: "Unknown",
-            description = characterDetails.text ?: "No description",
-            imageURL = characterImageUrl,
-            duckDuckLink = characterDetails.firstURL ?: ""
-        )
-    } ?: emptyList()
+            Character(
+                name = characterName ?: "Unknown",
+                description = characterDetails.text ?: "No description",
+                imageURL = characterImageUrl,
+                duckDuckLink = characterDetails.firstURL ?: ""
+            )
+        } ?: emptyList()
+    }
 }

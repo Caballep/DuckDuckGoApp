@@ -1,5 +1,6 @@
-package com.example.duckduckgoapp.network
+package com.example.duckduckgoapp.remote.services
 
+import com.example.duckduckgoapp.remote.entities.CharactersResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

@@ -1,4 +1,4 @@
-package com.example.duckduckgoapp.ui.activities
+package com.example.duckduckgoapp.local.ui.activities
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -7,9 +7,9 @@ import androidx.lifecycle.lifecycleScope
 import com.example.duckduckgoapp.R
 import com.example.duckduckgoapp.databinding.ActivityMainBinding
 import com.example.duckduckgoapp.ext.deviceModeIsLandscape
-import com.example.duckduckgoapp.ui.fragments.CharacterDetailsFragment
-import com.example.duckduckgoapp.ui.fragments.CharacterListFragment
-import com.example.duckduckgoapp.ui.viewmodels.MainViewModel
+import com.example.duckduckgoapp.local.ui.fragments.CharacterDetailsFragment
+import com.example.duckduckgoapp.local.ui.fragments.CharacterListFragment
+import com.example.duckduckgoapp.local.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect

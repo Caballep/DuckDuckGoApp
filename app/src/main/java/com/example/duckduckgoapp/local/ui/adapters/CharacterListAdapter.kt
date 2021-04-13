@@ -1,10 +1,10 @@
-package com.example.duckduckgoapp.ui.adapters
+package com.example.duckduckgoapp.local.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.duckduckgoapp.databinding.ItemCharacterListBinding
-import com.example.duckduckgoapp.entities.Character
+import com.example.duckduckgoapp.local.models.Character
 
 class CharacterListAdapter(
     private val characterList: List<Character>,
